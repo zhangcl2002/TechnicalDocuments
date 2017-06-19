@@ -1,4 +1,4 @@
-# <font color="red">传送带</font>持续集成部署平台
+# <font color="red">Storm</font>持续集成部署平台
 
 
 ## 平台建设目标
