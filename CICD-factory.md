@@ -1,10 +1,13 @@
 # <font color="red">传送带</font>持续集成部署平台
 
+
+## 平台建设目标
+
 > 持续集成 持续部署   
 
-> 敏捷开发的基础
+> 敏捷开发的基础支持平台
 
-> 软件生命周期中的自动化
+> 自动化软件生命周期流转
 
 > 提升运维人员工作效率，提升价值的利器
 
@@ -12,9 +15,9 @@
 
  * Subversion / Gitlab
  * Jenkins
+ * Sonarqube
  * Kubernetes
  * Docker
- * Sonarqube
 
 ## 平台架构及拓扑
 
