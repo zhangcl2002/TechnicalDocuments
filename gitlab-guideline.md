@@ -1,8 +1,6 @@
 ![gitlab](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBCpGXCAjcmo94cM95YRZcic7leU4tq60ibfvcGnm0MT20I580fn8aCJtFm4M415eyCssNrIYCPWGckA/0?wx_fmt=png)
 
-# <div align="center"> GitLab Guideline </div>
-
-[TOC]
+# <font color="red"> GitLab Guideline </font>
 
 ## Introduction
 
