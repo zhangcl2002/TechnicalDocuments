@@ -443,9 +443,42 @@ spec:
 5. 在k8s中通过ingress暴露服务，ingress中的host设置为gitlab.example.org
 
 ```
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gitlab-ingress
+#  annotations:
+#    nginx.org/rewrites: "serviceName=gitlab rewrite=/;serviceName=gitlab rewrite=/gitlab/users/"
+spec:
+  rules:
+  - host: gitlab.aegonthtf.com
+    http:
+      paths:
+      - path: /gitlab
+        backend:
+          serviceName: gitlab
+          servicePort: 80
 ```
 
 6. 设置gitlab.example.org域名指向nginx服务器（域名服务器，keeplived ha) , 在nginx设置了泛域名反向代理（待验证），反向代理至k8s各node的80端口。
+
+```
+server {
+    listen       80;
+    server_name  gitlab.aegonthtf.com logcenter-dev.aegonthtf.com jenkins-edge.aegonthtf.com zipkin-dev.aegonthtf.com earthcore.aegonthtf.com sonarqube-dev.aegonthtf.com eureka-dev.aegonthtf.com ;  
+
+    #charset koi8-r;
+    access_log  /var/log/nginx/gitlab.log  main;
+
+    location / {
+       #index  index.html index.htm;
+       proxy_set_header Host $http_host;
+       proxy_pass http://k8s-standalone-backup;
+       client_max_body_size 200m;
+       client_body_buffer_size 128k;
+    }
+}
+```
 
 
 
