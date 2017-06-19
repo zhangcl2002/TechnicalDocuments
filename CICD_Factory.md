@@ -170,7 +170,7 @@ spec:
 - Proxy Setting
 - Install Plugins
 - Create Admin Accounts
-- General Setting *
+- General Setting
 
 ### Jenkins Pipeline
 
