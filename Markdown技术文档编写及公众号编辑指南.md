@@ -18,7 +18,7 @@ Markdown的语法简洁明了、容易学习，而且功能比纯文本更强，
 
 Markdown编辑工具有很多。 有收费的，有免费的.  简单写写总结不需要多么强大的功能，所以用开源免费软件就足够了。
 
-如下工具可以供我们选用：11
+如下工具可以供我们选用：
 
 * Atom
 > Atom is a text editor that's modern, approachable, yet hackable to the core, a tool you can customize to do anything but also use productively without ever touching a config file.
