@@ -4,6 +4,7 @@
 
 > ## Markdown 是什么及可以用于哪些用途
 
+
 Markdown是一种标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。
 
 Markdown的语法简洁明了、比HTML更容易学习，而且功能比纯文本更强，现在有很多人用它写技术文章，比如github网站上的项目介绍Readme.md都是使用Markdown语法编写的。尽管编写容易，但可以渲染成不同的风格，并且借助插件可以转换为PDF/HTML等格式。
@@ -141,6 +142,8 @@ c:\usr\username > apm config set https-proxy https://username:password@proxy-ip:
 
 **5. 图文预览后发出**
 预览可以使用它提供的模拟器预览。 也可以发送到自己的手机预览。
+
+
 
 <br>
 **_reference:_**
