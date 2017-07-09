@@ -1,9 +1,7 @@
-# Markdown使用指南
 
 <br>
 
 > ## Markdown 是什么及可以用于哪些用途
-
 
 Markdown是一种标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。
 
@@ -23,12 +21,11 @@ Markdown编辑工具有很多。 有收费的，有免费的. 简单写写总结
 
 - Atom
 
-  *Atom is a text editor that's modern, approachable, yet hackable to the core, a tool you can customize to do anything but also use productively without ever touching a config file. 全球范围内影响力最大的代码仓库/开源社区，GitHub 的程序员们并不满足于此。他们使用目前最先进流行的技术重新打造了一款称为"属于21世纪"的代码编辑器----Atom， 它开源免费跨平台，并且整合 GIT 并提供类似 SublimeText 的包管理功能，支持插件扩展，可配置性非常高......*
-  <br>
+  _Atom is a text editor that's modern, approachable, yet hackable to the core, a tool you can customize to do anything but also use productively without ever touching a config file. 全球范围内影响力最大的代码仓库/开源社区，GitHub 的程序员们并不满足于此。他们使用目前最先进流行的技术重新打造了一款称为"属于21世纪"的代码编辑器----Atom， 它开源免费跨平台，并且整合 GIT 并提供类似 SublimeText 的包管理功能，支持插件扩展，可配置性非常高......_<br>
+
 - Markdown Here
 
-  *Markdown Here是一款浏览器插件。 可以将编辑框中的markdown文本完成渲染，生成渲染后的格式。 渲染，高亮方式可
-  以做定制。*
+  _Markdown Here是一款浏览器插件。 可以将编辑框中的markdown文本完成渲染，生成渲染后的格式。 渲染，高亮方式可 以做定制。_
 
 - Github网站上直接编辑
 
@@ -36,7 +33,7 @@ Markdown编辑工具有很多。 有收费的，有免费的. 简单写写总结
 
 - 网易云笔记
 
-- 在线Markdown编辑 http://dillinger.io/
+- 在线Markdown编辑 <http://dillinger.io/>
 
 其中后四种主要仅用于编辑和简单的转换显示，非常简单，本文略过不讲。 文中主要介绍一下第一、第二种工具的相关情况，以及使用这两种工具完成公众号文章的生成。
 
@@ -44,10 +41,9 @@ Markdown编辑工具有很多。 有收费的，有免费的. 简单写写总结
 
 > ## 如何安装工具
 
-
 <br>
 
-### 1\. 安装Atom
+## 1\. 安装Atom
 
 - **获取软件** 登陆Atom官网<https://atom.io> ，获得最新的Atom软件。
 - **安装软件** 按照<http://flight-manual.atom.io/getting-started/sections/installing-atom/中的安装说明，安装即可>
@@ -59,29 +55,27 @@ c:\usr\username > apm config set https-proxy https://username:password@proxy-ip:
 
 - **安装插件**
 
-  Mac中与Windows中菜单有差异，似乎也仅仅是位置不同。 找到Settings菜单，点击进入。 Packages中显示本实例中安装了那些Package,Install中显示有那些包可以安装（输入需要的包名称进行搜索，搜索到后点击下载安装，系统会完成该指令。 部分Package下载完成即可使用，部分需要到Packages找到这个安装好的包，进入其配置界面进行必要的配置。
-  <br>
+  Mac中与Windows中菜单有差异，似乎也仅仅是位置不同。 找到Settings菜单，点击进入。 Packages中显示本实例中安装了那些Package,Install中显示有那些包可以安装（输入需要的包名称进行搜索，搜索到后点击下载安装，系统会完成该指令。 部分Package下载完成即可使用，部分需要到Packages找到这个安装好的包，进入其配置界面进行必要的配置。<br>
 
   推荐安装如下包：
 
-  - *Markdown Writer*   该插件相当于Markdown语法的图形界面，可通过选择不同的功能完成相关项的编写，如插入代码块，插入图片，插入链接等等。
+  - _Markdown Writer_ 该插件相当于Markdown语法的图形界面，可通过选择不同的功能完成相关项的编写，如插入代码块，插入图片，插入链接等等。
   - markdown-preview-enhanced 该插件将提供丰富的预览功能，调出后，可以根据系统设置进行渲染后结果的显示，并在预览界面上右键可调出更多功能，如导入到磁盘，格式也可以选择为PDF或HTML等
-  - *markdown-img-paste*  贴图利器。 可以将截屏拷贝至正在编辑的Markdown文件中，并自动收集集中放置贴入的拷屏图片。
-  - *GitHub*， *Git Plus* 版本控制插件。 可实现将编辑的文件在Github网站的上传下载。 （该插件本身必须配合以本地安装有Git客户端才可以正常实现预期功能。）插件的功能完全就是在Atom中有界面来实现git client的commit , push等功能。不用插件完全在文件系统中使用传统的git client也是一样的，能将文档保存进git hub并能上传下载就可以了。 这两个插件能否适用于gitlab，没测试，应该也是可以的。
-  - *Atom Beutify* 格式插件。 可以帮助你一键调整格式
+  - _markdown-img-paste_ 贴图利器。 可以将截屏拷贝至正在编辑的Markdown文件中，并自动收集集中放置贴入的拷屏图片。
+  - _GitHub_， _Git Plus_ 版本控制插件。 可实现将编辑的文件在Github网站的上传下载。 （该插件本身必须配合以本地安装有Git客户端才可以正常实现预期功能。）插件的功能完全就是在Atom中有界面来实现git client的commit , push等功能。不用插件完全在文件系统中使用传统的git client也是一样的，能将文档保存进git hub并能上传下载就可以了。 这两个插件能否适用于gitlab，没测试，应该也是可以的。
+  - _Atom Beutify_ 格式插件。 可以帮助你一键调整格式
 
-
-### 2\. 安装Markdown Here
+## 2\. 安装Markdown Here
 
 该插件软件因保存在Google的资产中，所以国内访问不到官方软件下载的位置。
 
 官方提供多种浏览器插件。建议还是用Chrome。可以自己尝试下载，也可以联系我要到这个插件。
 
-- **安装Chrome插件** 在Chrome中访问chrome://extensions/， 然后把下载到的Markdown Here插件直接拖到界面上，按向导完成安装就可以了。
-<br>
-- **配置** 不配置也可以直接使用了。 实际使用中，可以在Markdown Here Options界面中，选择或者自定义primary styling css以及Syntax Highlighting CSS来实现对渲染结果的自定义，如字体的颜色，大小，以及其他元素的颜色，大小，其他格式选项等。
-<br>
-推荐两个CSS文件 地址 <https://github.com/zhangcl2002/markdownHere> 专为Markdown Here插件加工微信公众平台文章编辑所用的样式，能很好的兼容代码样式，且有代码高亮效果。 说明
+- **安装Chrome插件** 在Chrome中访问chrome://extensions/， 然后把下载到的Markdown Here插件直接拖到界面上，按向导完成安装就可以了。<br>
+
+- **配置** 不配置也可以直接使用了。 实际使用中，可以在Markdown Here Options界面中，选择或者自定义primary styling css以及Syntax Highlighting CSS来实现对渲染结果的自定义，如字体的颜色，大小，以及其他元素的颜色，大小，其他格式选项等。<br>
+  推荐两个CSS文件 地址 <https://github.com/zhangcl2002/markdownHere> 专为Markdown Here插件加工微信公众平台文章编辑所用的样式，能很好的兼容代码样式，且有代码高亮效果。 说明
+
   - 把base.css粘贴到 markdown here 的基本渲染CSS处
   - 把highlight.css粘贴到 markdown here 的语法高亮CSS处即可
 
@@ -90,10 +84,10 @@ c:\usr\username > apm config set https-proxy https://username:password@proxy-ip:
 > ## 如何使用工具
 
 <br>
-首先，建议找两篇关于Markdown语法的文章看看，了解下最简单的那几个元素就可以了。 如几级标题的定义，引用的定义，字体强调，斜体字，有序列表，无序列表，链接插入，图片插入等主要的使用场景。
-<br>
+首先，建议找两篇关于Markdown语法的文章看看，了解下最简单的那几个元素就可以了。 如几级标题的定义，引用的定义，字体强调，斜体字，有序列表，无序列表，链接插入，图片插入等主要的使用场景。<br>
 对这些基础的语法要素要做一点点了解，否则，就算能使用工具达成目标，但在黑夜里走路实在也是没什么意思。
-> #### 编写Markdown文档 ####
+
+> #### 编写Markdown文档
 
 **1\. 简单编辑**
 
@@ -120,17 +114,14 @@ c:\usr\username > apm config set https-proxy https://username:password@proxy-ip:
 Markdown文件中可以插入的图片包含jepg,png等静态的图片，也可以插入gif这样的动态图片（可用于部分演示说明）
 
 相关工具列举：
-   - 截屏成动画 licecap( Mac 和 Windows)  https://www.cockos.com/licecap/
-   - Mac截屏工具 Snip http://snip.qq.com
-   ***注意：*** 使用滚动拷屏时，需要在系统的privacy设置中的，辅助功能部分加上snip, 然后在snip的偏好设置中，选中允许滚空拷屏。
-   - Windows截图工具 https://zh.snipaste.com/download.html
 
+- 截屏成动画 licecap( Mac 和 Windows) <https://www.cockos.com/licecap/>
+- Mac截屏工具 Snip <http://snip.qq.com> **_注意：_** 使用滚动拷屏时，需要在系统的privacy设置中的，辅助功能部分加上snip, 然后在snip的偏好设置中，选中允许滚空拷屏。
+- Windows截图工具 <https://zh.snipaste.com/download.html>
 
 <br>
 
-> #### 发送微信号文章 ####
-
-
+> #### 发送微信号文章
 
 **1\. 图片准备**
 
@@ -142,7 +133,7 @@ Markdown文件中可以插入的图片包含jepg,png等静态的图片，也可�
 
 自定义格式,可以在此处修改CSS的定义，实现对风格的自己定义，但需要熟悉一点CSS的知识，就可以尝试着去修改，修改后，可以在下面的Preview框中通过对示例md文件的转换，进行测试。
 
-**3\.发文编辑**
+**3.发文编辑**
 
 将编写完成的md文件内容拷贝入待发图文的框中**
 
@@ -150,10 +141,7 @@ Markdown文件中可以插入的图片包含jepg,png等静态的图片，也可�
 
 点击浏览器工具栏上的小蝴蝶（markdown here)图标，待发图文就从源码变成了产品啦。
 
-**5. 图文预览后发出**
-预览可以使用它提供的模拟器预览。 也可以发送到自己的手机预览。
-
-
+**5\. 图文预览后发出** 预览可以使用它提供的模拟器预览。 也可以发送到自己的手机预览。
 
 <br>
 **_reference:_**
