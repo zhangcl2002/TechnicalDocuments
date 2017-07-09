@@ -116,6 +116,16 @@ c:\usr\username > apm config set https-proxy https://username:password@proxy-ip:
 编写文档的时候，确保图片或拷屏在粘贴缓存中，然后在需要插入图片的位置输入图片的名字，然后ctrl+v. 注意直接拷贝图片文件是不可以的，一定要打开图片，拷贝图片的内容才可以。 拷屏不存在这个问题，都是图片要素在缓存中的。
 
 文章编写完成后，所有该文章的图片都在文章当前目录的子目录images中，全部上传至某图床，如微信公众号的图床里面，然后再将文章中链接图片的超链接从本地改到对应的网络链接。 （麻烦了点，但好在图片也不会太多，都改改也还能接受，主要是看图床对上传图的处理，如果是与原文件名有规律的，那么修改就很容易，没规律就只能一个一个改了）
+
+Markdown文件中可以插入的图片包含jepg,png等静态的图片，也可以插入gif这样的动态图片（可用于部分演示说明）
+
+相关工具列举：
+   - 截屏成动画 licecap( Mac 和 Windows)  https://www.cockos.com/licecap/
+   - Mac截屏工具 Snip http://snip.qq.com
+   ***注意：*** 使用滚动拷屏时，需要在系统的privacy设置中的，辅助功能部分加上snip, 然后在snip的偏好设置中，选中允许滚空拷屏。
+   - Windows截图工具 https://zh.snipaste.com/download.html
+
+
 <br>
 
 > #### 发送微信号文章 ####
