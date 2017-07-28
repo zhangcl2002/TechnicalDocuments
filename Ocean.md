@@ -1,246 +1,129 @@
-# <font color="red">同方全球容器云-Ocean</font>
 
-> 基于Private Cloud,利用Docker及Google Kubernetes提供PAAS平台服务
+![Ocean](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBAK7QQJXOwPcvvOcnhG4hRJvAiaNBPCnDpccfULQqtMR1VLFKX63Aenf1BziaQwQibg6NUYSmUbdibJnw/0?wx_fmt=png)
+<br />
+# <font color="#003399">同方全球容器云-Ocean</font>
+<br />
 
-> 提供DevOPs工具集，包括Gitlab, Jenkins, Sonarqube, Subversion等，实现全新的部署流程，任务流转以及服务全面升级
+<font color="#FF6666">
+小伙伴们差不多花了一年的时间投入在容器云的建设上，大家有一个一致的目标，就是期望通过我们的努力和智慧，将孵化成熟的新科技引入到工作实践中，触发变化，实现可能，创造价值。
+<br>
+纲举则目张。本文希望做一个引子，可窥全貌。用心于每一个细节但始终胸有全图，每一场战斗，一城一池的争夺，坚持不放弃，将决定战役的最终胜利。
+</font>
 
-> 提供Redis,Rabbitmq, Mysql Galara Cluster，Logcenter(ELK)，Prometheus（Monitor)等系统服务
+<br />
+## Ocean Platform 用途
+<br />
+> *基于Private Cloud,利用Docker及Google Kubernetes构建提供PAAS平台服务*
+> *该平台将提供给应用无以伦比的灵活性，高密利用资源，使得灵活扩缩，自我监控，自我愈合，灰度发布等互联网应用能力在传统企业也同样实现*
+> *我们认为未来商业外购应用也将越来越多的采用容器的方式发布，完全封装安装复杂性，升级替换等维护动作变成一件简单的事情*
 
-> 支持基于Spring Cloud及Dubbo等分布式框架进行分布式应用开发，基于容器的部署平台不仅从技术上，更从管理成本，资源成本方面为微服务架构应用的开发提供了可行性。
+<br />
+> *提供DevOPs工具集，包括Gitlab, Jenkins, Sonarqube, Subversion等，实现全新的部署流程，任务流转以及服务全面升级*
 
-> 支持Spring Boot应用开发。 PAAS平台将提供配置中心， 服务注册／发现中心等基础服务，提供基于Ceph的对象存储服务，使得应用与存储，应用的配置充分解耦，实现应用能在不同环境间轻松迁移。
+<br />
+> *提供Redis,Rabbitmq, Mysql Galara Cluster，Logcenter(ELK)，Prometheus（Monitor),Harbor Registry等系统服务*
 
-> 针对Java项目，支持持续集成和部署（定时或提交合并主线时可自动触发部署），支持敏捷开发。 提供质量检查服务，协助提高程序质量。
+<br />
+> *支持基于Spring Cloud及Dubbo等分布式框架进行分布式应用开发，基于容器的部署平台不仅从技术上，更从管理成本，资源成本方面为微服务架构应用的开发提供了可行性。*
 
-> 提供多副本的分布式软件定义存储，为应用及系统提供对象存储，块存储以及部分文件存储服务。
+<br />
+> *支持Spring Boot应用开发。 PAAS平台将提供配置中心， 服务注册／发现中心等基础服务，提供基于Ceph的对象存储服务，使得应用与存储，应用的配置充分解耦，实现应用能在不同环境间轻松迁移。*
 
-> 实现公有云／私有云应用部署上的最大程度相同，实现应用的在私有云／公有云间自由迁移
+<br />
+> *针对Java项目，支持持续集成和部署（定时或提交合并主线时可自动触发部署），支持敏捷开发。 提供质量检查服务，协助提高程序质量。*
 
-> 提供资源使用的高度灵活，高密使用，同样资源提供更高的服务能力
+<br />
+> *提供多副本的分布式软件定义存储，为应用及系统提供对象存储，块存储以及部分文件存储服务。*
 
-> 降低系统管理人员的工作量，将宝贵时间投入到创新或其他高价值工作中
+<br />
+> *实现公有云／私有云应用部署上的最大程度相同，实现应用的在私有云／公有云间自由迁移*
 
+<br />
+> *提供资源使用的高度灵活，高密使用，同样资源提供更高的服务能力*
 
-## 平台组件
+<br />
+> *降低系统管理人员的工作量，将宝贵时间投入到创新或其他高价值工作中*
 
-- Subversion / Gitlab
-- Jenkins
-- Sonarqube
-- Kubernetes
+<br />
+
+## Ocean平台的组成
+
 - Docker
+- Kubernetes
+![kubernetes](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBCLAg5aiazhvYYa9OGibBoJzy10uOzoZ2gibDic6iaxgak4MIZFwnnicyBEuodwLp8tiaiaZtHf3bibZ4eHx4w/0?wx_fmt=png)
+- Ceph
+![ceph dashboard ](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBCLAg5aiazhvYYa9OGibBoJzypQia9UnPaRibkL2A0zTyZAs5vvAHUsJicVjSo0MnECCZJ0XRkK7Jz5MwA/0?wx_fmt=png)
+- Harbor Registry
+![Harbor](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBCLAg5aiazhvYYa9OGibBoJzyYo1cD1LJGSJXPEDHdtDiaSoTmsI8vckYNz0AMmy3Z2xWXJ1lUJqO95w/0?wx_fmt=png)
+- Artifactory  (Maven Private Repository)
+![Artifacotry](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBCLAg5aiazhvYYa9OGibBoJzy2ibF80UeDDxhrdxPaYFDcW7FXq2BEkKYuD2WYgdYicPhbvooBC5Sib3Ew/0?wx_fmt=png)
+- SCM System (Subversion / Gitlab)
+![gitlab](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBCLAg5aiazhvYYa9OGibBoJzyDHuRF9fg47CjmplRwiaTe429zpyKfqKUMgfHibVKp7F2wRAO1eUNiaFXQ/0?wx_fmt=png)
+- Jenkins
+![Jenkins](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBCLAg5aiazhvYYa9OGibBoJzyPmNl24m6MKicS0ej37YDF3YuqAhH8JGkANn7LnhWcqV98ltk6Cl9OHQ/0?wx_fmt=png)
+- Sonarqube
+![Sonarqube](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBCLAg5aiazhvYYa9OGibBoJzycia6UPyC304CoiarPUxtBoSaEwWicbISGVXRJw3ZGwXrrwFCicuUxpoVDw/0?wx_fmt=png)
+- Redis
+- RabbitMQ
+- ELK (elasticsearch + logstash + kibana)
+![logcenter](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBCLAg5aiazhvYYa9OGibBoJzyNRyICKQpjDTF0IbyMQvEum4olMnF5BrOBXHwxkjkuJArbP2vFowupw/0?wx_fmt=png)
+- Monitoring ( Oracle Enterprise Manager / Promethues)
+![Promethues](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBCLAg5aiazhvYYa9OGibBoJzy9sPUnDp5sb8ZkMKDk1GMKzZ2a1NvfU4RVg9pmMgk36ibmsPT9b2Xzdw/0?wx_fmt=png)
+- Mysql Galara Cluster
+- Spring Eureka
+![Eureka](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBCLAg5aiazhvYYa9OGibBoJzyb3yEjNF8GlVplkyD6Nruox48XdY6icib33bgelWMXJuIgKkIYrfRKvCQ/0?wx_fmt=png)
+- Zipkin
+![Zipkin](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBCLAg5aiazhvYYa9OGibBoJzykHCfPz7LsuY7VaZiaySibcGVbicvlTyHlQRwf06xLAtM926EDoDdmqmow/0?wx_fmt=png)
 
 ## 平台架构及拓扑
 
-## 各组件安装
+![  OceanFrame](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBAK7QQJXOwPcvvOcnhG4hRJ2jhIYCEnBUaQhhpic8JUicJVaq7Lzmjsn6kRoib48oyQAXvhnjKjGdC4Q/0?wx_fmt=png)
+*Diagram Author: CaryChen*
 
-### Jenkins安装
+说明：
 
-Jenkins 将以容器安装的方式部署在Kubernetes平台上，以最简化安装过程以及后续维护。后台存储选用Ceph分布式存储，以利用其多副本等高可靠以及灵活扩展的特性。
+## 各组件安装说明
 
-Jenkins镜像我们采用定制化镜像，该镜像包含了我们选用的Oracle JDK, Mysql Client, Maven等组件。
+未来我们将整理Ocean平台各组件的安装说明，如下
 
-安装过程如下：
+   1. Kubernetes Installation Guide
+   2. Vmware Harbor Installation Guide
+   3. Jenkins Installation Guide
+   4. Gitlab Installation Guide
+   5. ELK Installation Guide
+   6. Redis Installation Guide
+   7. Mysql Galara Cluster Installation Guide
+   8. Promethues Installation Guide
+   9. Ceph Installation Guide
+   10. Sonarqube Installation Guide
+   11. RabbitMQ Installation Guide
+   12. Artifactory Installation Guide
 
-1. 持久化存储创建 登陆Ceph服务器，然后执行下述指令
+## 各组件使用说明
 
-  ```bash
-  rbd create rbd/jenkins-home --size 20G --image-format 2 --image-feature layering
-  ```
+Ocean平台提供的服务有些向使用者开放服务，有些对服务使用者透明。 从服务使用者角度，提供如下使用说明：
 
-  **_注：_** 使用Ceph作为持久化存储，当分配的存储不足时，可使用Ceph命令对其进行扩容，可参考 [ceph rdb image resize](http://www.mamicode.com/info-detail-1480817.html)
+> **开发过程使用Ocean指南**
 
-2. Kubernetes PV & PVC 创建
+- 开发过程中如何使用gitlab
+- 开发过程中如何使用Jenkins
+- 开发过程中如何使用日志框架将日志输出到集中日志平台
+- 在Logcenter中如何查看及分析日志
+- 开发过程如何使用Maven以及私有仓库Artifactory
+- 开发如何使用S3接口使用Ceph存储
 
-  在kubernetes Dashboard以图形化界面方式使用下述文件创建或者上传文件到Kubernetes Master后执行
+> **分布式开发指南**
 
-```yaml
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: jenkins-home-pv
-spec:
-  capacity:
-    storage: 20Gi
-  accessModes:
-    - ReadWriteOnce
-  rbd:
-    monitors:
-      - 10.72.243.113:6789,10.72.243.114:6789,10.72.243.115:6789
-    pool: rbd
-    image: jenkins-home
-    user: admin
-    secretRef:
-      name: ceph-secret
-    fsType: ext4
-    readOnly: false
-  persistentVolumeReclaimPolicy: Recycle
----
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: jenkins-home-claim
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 20Gi
-```
+- 如何使用Ocean平台上的配置中心(Spring Config Server)
+- 如何使用Ocean平台上的服务注册/服务发现 （Spring Eureka Server Cluster)
+- 如何使用服务跟踪 (Spring Zipkin)
 
-3\. 在kubernetes平台上创建Jenkins
+> **从服务提供及维护者角度，提供如下使用说明**
 
-**_注意：_** **_Jenkins Base Image Dockerfile_**
-
-(该文件尚待修改，目前使用当前使用的定制版本)
-
-```docker
-FROM docker.io/library/Jenkins
-
-ADD  ORALCE JAVA (选那个JDK需要考虑)
-ADD  MYSQL (为未来执行Mysql Script)
-ADD  Maven
-```
-
-```docker
-# Example instructions from https://docs.docker.com/reference/builder/
-
-FROM ubuntu:14.04
-
-MAINTAINER example@example.com
-
-ENV foo /bar
-WORKDIR ${foo}   # WORKDIR /bar
-ADD . $foo       # ADD . /bar
-COPY \$foo /quux # COPY $foo /quux
-ARG   VAR=FOO
-
-RUN apt-get update && apt-get install -y software-properties-common\
-    zsh curl wget git htop\
-    unzip vim telnet
-RUN ["/bin/bash", "-c", "echo hello ${USER}"]
-
-CMD ["executable","param1","param2"]
-CMD command param1 param2
-
-EXPOSE 1337
-
-ENV myName="John Doe" myDog=Rex\ The\ Dog \
-    myCat=fluffy
-
-ENV myName John Doe
-ENV myDog Rex The Dog
-ENV myCat fluffy
-
-ADD hom* /mydir/        # adds all files starting with "hom"
-ADD hom?.txt /mydir/    # ? is replaced with any single character
-
-COPY hom* /mydir/        # adds all files starting with "hom"
-COPY hom?.txt /mydir/    # ? is replaced with any single character
-COPY --from=foo / .
-
-ENTRYPOINT ["executable", "param1", "param2"]
-ENTRYPOINT command param1 param2
-
-VOLUME ["/data"]
-
-USER daemon
-
-LABEL com.example.label-with-value="foo"
-LABEL version="1.0"
-LABEL description="This text illustrates \
-that label-values can span multiple lines."
-
-WORKDIR /path/to/workdir
-
-ONBUILD ADD . /app/src
-
-STOPSIGNAL SIGKILL
-
-HEALTHCHECK --retries=3 cat /health
-
-SHELL ["/bin/bash", "-c"]
-```
-
-Jenins.yaml
-
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  name: jenkins-research-svc
-  labels:
-    name: jenkins
-spec:
-  type: LoadBalancer
-  selector:
-    name: jenkins-research
-  ports:
-    - name: http
-      port: 8080
-
----
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  name: jenkins-research-deployment
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        name: jenkins-research
-    spec:
-      containers:
-      - name: jenkins-research
-        image: registry.aegonthtf.com/aegonthtf-research/jenkins-research
-        imagePullPolicy: Always
-        ports:
-        - name: http
-          containerPort: 8080
-        volumeMounts:
-        - name: jenkins-home
-          mountPath: /var/jenkins_home
-      volumes:
-      - name: jenkins-home
-        persistentVolumeClaim:
-          claimName: jenkins-home-claim
-```
-
-> 图 - K8s 上的Jenkins svc 示意图
-
-通过Scope登入或者是从Jenkins 所在容器的宿主机上使用 Docker exec -it .. bash 命令登入，或者是从kubernetes Master上使用kubectl exec -it pod-name bash 登入Jenkins容器，从下图所示的文件中获得安装的密码。
-
-获得密码后，在首次登陆Jenkins时按照提示添入。
-
-![Jenkins SVC Image](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBBCT79ibpa1YtCcjtv6aAnrBDcxoRKuTIaiazAAfH2V4QrYxw01IMUYI6jaiaNVIX4eFuhodZRJ0MwSw/0?wx_fmt=png)
-
-![Fill the initial password](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBBCT79ibpa1YtCcjtv6aAnrBcUQh98I1xL4QNHM7UyKnqJWr5fCeCicoHJxDr7VOpv7y2CUVSSiad2Gg/0?wx_fmt=png)
-
-为了使得Jenkins能够联网安装Plugin,需要在设置代理（除非服务器能直接上网）（此处docker是否可以联网是否有关系未做测试，推测应该两者无关系）
-
-![setup the proxy](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBBCT79ibpa1YtCcjtv6aAnrBlf5rGb5jtVggLrbTS9warQJZJr7xS4QvqeYgz1LQ2ZeGJJ3piaicc0FA/0?wx_fmt=png)
-
-![Install the recommend plugin](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBBCT79ibpa1YtCcjtv6aAnrBCJNbh3ChWPLeFb47icELyUePbJ6a5QHa5ojkstRzuGe7fUN60icQxN1w/0?wx_fmt=png)
-
-**_目前未总结在River持续集成平台中安装了那些插件，这些截图中的插件供参考_**
-
-![Install the recommend plugin](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBBCT79ibpa1YtCcjtv6aAnrBYribFNZKsr3zqz84hErTczAvhyddLkQvZ5VKO3k4L1ibHfxCj0uSq0Hw/0?wx_fmt=png)
-
-![Install the recommend plugin](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBBCT79ibpa1YtCcjtv6aAnrBZXAGvlNRzctic6Tg2ibG6FZuv8lakUzkJGghAvNG1Z9Qwg2qcicY8CApg/0?wx_fmt=png)
-
-![Install the recommend plugin](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBBCT79ibpa1YtCcjtv6aAnrBDz37bvJE3q6x85JZicCtGa3N7LgdLibqN8DJlOvWiaWWYlmvtwVhrPWJw/0?wx_fmt=png)
-
-### Jenkins配置
-
-- Unlock
-
-- Proxy Setting
-
-- Install Plugins
-
-- Create Admin Accounts
-- General Setting
-
-### Jenkins Pipeline
-
-### Use Case
+1. Gitlab权限管理
+2. Jenkins日常管理
+3. ELK日志分析，ELK->Promethues日志报警
+4. 私有云Mysql Galara Cluster Database维护指南
+5. Spring 配置中心及服务注册发现中心的监控及维护
+6. Maven私有仓库的管理
+7. 推广培训
