@@ -86,24 +86,52 @@ docker push registry.aegonthtf.com/aegonthtf-research/tra-app:23
 
 - 创建ceph 块存储image 登陆可以操作ceph的机器，创建ceph image (这是简要的使用，实际更完善的使用访问以后再逐步完善)
 
-  ```
+  ```bash
   rbd create rbd/demo-storage --size 5G --image-format 2 --image-feature layering
   ```
 
 - 查看
 
-  ```
+  ```bash
   rbd ls
   rbd info demo-storage
   ```
+下面几个命令参考，不要执行
+  - 删除镜像
 
-  - 删除 (勿执行)
-
-  ```
+  ```bash
   rbd rm demo-storage
   ```
+  - 查看锁
+  ```bash
+[root@vm-shalce97 ~]# rbd lock list demo-storage
+There is 1 exclusive lock on this image.
+Locker         ID                                           Address
+client.2265893 kubelet_lock_magic_vm-shalku93.aegonthtf.com 10.72.243.139:0/1022248
 
-演示： ![ceph image create](/images/ceph-image-create.gif)
+  ```
+  - 删除锁
+  ```bash
+[root@vm-shalce97 ~]# rbd lock rm demo-storage kubelet_lock_magic_vm-shalku93.aegonthtf.com client.2265893
+  ```
+
+  - 扩展image大小
+  ```bash
+  [root@vm-shalce97 ~]# rbd resize -p rbd --size 10G demo-storage
+Resizing image: 100% complete...done.
+[root@vm-shalce97 ~]# rbd info demo-storage
+rbd image 'demo-storage':
+	size 10240 MB in 2560 objects
+	order 22 (4096 kB objects)
+	block_name_prefix: rbd_data.2292dd6b8b4567
+	format: 2
+	features: layering
+	flags:
+[root@vm-shalce97 ~]#
+  ```
+
+
+演示： ![ceph image create](https://mmbiz.qlogo.cn/mmbiz_gif/5Ofd65QfQBDrn9XqAib8CAY8S3Xty6ibDlIe9KriaujysUBzXmBR4Eso9ROzUO3VW9vMo2F3JDwD7qx1Z7L123pKw/0?wx_fmt=gif)
 
 - 在k8s中创建PV & PVC
 
@@ -145,13 +173,13 @@ spec:
       storage: 5Gi
 ```
 
-演示： ![ceph image create](/images/ceph-storage.gif)
+演示： ![ceph image create](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBDrn9XqAib8CAY8S3Xty6ibDltRZAqfWribLC0m6UlYgnia9Yc57Zl5AKPyLxGRJB8xLkMd1XmmakWW8g/0?wx_fmt=png)
 
 ## NAS 存储
 
 - 在k8s各Node上映射NAS应用共享文件夹路径
 
-![nas1](/images/nas.png)
+![nas1](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBDrn9XqAib8CAY8S3Xty6ibDlw0z1Ar7ic5tgfib1tdNA2lojf3BfrqhglW3FdCJdCZtyM8Q1oojkX3Pw/0?wx_fmt=png)
 
 - 创建PV&PVC
 
@@ -184,7 +212,7 @@ spec:
       storage: 10Gi
 ```
 
-演示： ![nas storage create](/images/nas-storage.gif)
+演示： ![nas storage create](https://mmbiz.qlogo.cn/mmbiz_gif/5Ofd65QfQBDrn9XqAib8CAY8S3Xty6ibDloXGsRJkbZZ9vkA38kVEk95ibQmWyWzKsIlkCptNRrbEIHPIibkP89NPA/0?wx_fmt=gif)
 
 > ## 在k8s上部署服务
 
@@ -218,7 +246,7 @@ metadata:
   labels:
     app:  demo
 spec:
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -261,9 +289,9 @@ spec:
             claimName: demo-ceph-pvc
 ```
 
-演示：![app create](/images/demo-ceph-app.gif)
+演示：![app create](https://mmbiz.qlogo.cn/mmbiz_gif/5Ofd65QfQBDrn9XqAib8CAY8S3Xty6ibDl7mnfZmCkhViaqicgq83Tf7KYfDNretpHIFJEI836nnRjKTA7vcCw1n5A/0?wx_fmt=gif)
 
-![result](/images/result.png)
+![result](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBDrn9XqAib8CAY8S3Xty6ibDltRZAqfWribLC0m6UlYgnia9Yc57Zl5AKPyLxGRJB8xLkMd1XmmakWW8g/0?wx_fmt=png)
 
 _注意：使用ceph块存储不能创建多于1个副本，否则第二个及以上的副本会遇到存储被锁住的提示_
 
@@ -372,4 +400,4 @@ spec:
 
 1. 访问该域名
 
-![access result ](/images/accessResult.png)
+![access result ](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBDrn9XqAib8CAY8S3Xty6ibDlIfa7Rc258nt8y86PaLBqOlzytDkAEBV73nMDcMMKkgAJZn2ge0j8aA/0?wx_fmt=png)
