@@ -80,9 +80,9 @@ docker push registry.aegonthtf.com/aegonthtf-research/tra-app:23
 
 容器如不使用持久存储，则当容器重启的时候，运行时数据将全部丢失，重启后得到一个全新的实例。
 
-# 1\. 在持久存储上创建需要的存储位置
+## 1. 在持久存储上创建需要的存储位置
 
-## Ceph 存储
+### Ceph 存储
 
 - 创建ceph 块存储image 登陆可以操作ceph的机器，创建ceph image (这是简要的使用，实际更完善的使用访问以后再逐步完善)
 
@@ -175,7 +175,7 @@ spec:
 
 演示： ![ceph image create](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBDrn9XqAib8CAY8S3Xty6ibDltRZAqfWribLC0m6UlYgnia9Yc57Zl5AKPyLxGRJB8xLkMd1XmmakWW8g/0?wx_fmt=png)
 
-## NAS 存储
+### NAS 存储
 
 - 在k8s各Node上映射NAS应用共享文件夹路径
 
@@ -220,7 +220,7 @@ spec:
 
 - **通过yaml文件部署服务**
 
-使用不同持久存储，在脚本上仅仅是claimName的值不同而已。 可以参加下面两个脚本。
+使用不同持久存储，在脚本上仅仅是claimName的值不同而已。 可以参见下面两个脚本。
 
 使用Ceph存储的应用部署
 
