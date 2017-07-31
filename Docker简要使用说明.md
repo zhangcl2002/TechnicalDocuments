@@ -1,4 +1,4 @@
-> ### 本文目标
+> # 本文目标
 
 本文希望做一个向导，对Docker/K8S最通用的使用场景和过程做一个说明。 希望阅读本文对如何在我们的容器云平台上部署一个应用软件能起到一个手边参考的作用。
 
@@ -26,14 +26,13 @@
 
 - 服务验证
 
-> ### 主要步骤
+  > # 主要步骤
 
-> <br>
+> ## 构建应用容器镜像
 
-> #### 镜像构建
+1. 了解基础镜像 Docker的镜像是分层的，一层一层叠加的。比如，最底层就是scratch, 意思就是什么也没有，然后上面可以是CentOS, 然后上面是Tomcat,然后再上面是将实际的业务应用以及对Tomcat的定制化内容加入，最终形成一个实际可以使用的应用系统的Docker镜像。<br>
 
-> 1. 了解基础镜像 Docker的镜像是分层的，一层一层叠加的。比如，最底层就是scratch, 意思就是什么也没有，然后上面可以是CentOS, 然后上面是Tomcat,然后再上面是将实际的业务应用以及对Tomcat的定制化内容加入，最终形成一个实际可以使用的应用系统的Docker镜像。
-> 2. 编写Dockerfile文件
+2. 编写Dockerfile文件
 
 Dockerfile是生成Docker镜像的脚本。
 
@@ -41,27 +40,80 @@ Dockerfile是生成Docker镜像的脚本。
 
 比如Tomcat： <https://github.com/docker-library/tomcat/blob/e45349ec3432c75ca5b7e2ef4cae95276c7dccc7/8.0/jre8/Dockerfile>
 
-1. 生成镜像并推送至镜像仓库 将所有相关的文件放在安装有Docker Engine的服务器上某个文件夹下，然后在该文件夹执行下面的命令
+生成镜像并推送至镜像仓库 将所有相关的文件放在安装有Docker Engine的服务器上某个文件夹下，然后在该文件夹执行下面的命令
+
+Dockerfile:
 
 ```
-docker build -t dockername .
+FROM registry.aegonthtf.com/aegonthtf-research/tomcat:8.0-jre8
+
+MAINTAINER "Michael Zhang" <michaelzhang@aegonthtf.com>
+ENV LANG en_US.utf8
+ENV JAVA_OPTS '-server -Dfile.encoding=UTF-8 -Duser.timezone=Asia/Shanghai'
+
+#如果选用类Spring的方式，不采用上下文，直接进入应用的话可采用如下.( 注意要注释掉传统方式那条)
+ADD target/tra-app.war /usr/local/tomcat/webapps/ROOT.war
+
+#传统方式
+#ADD target/tra-app.war /usr/local/tomcat/webapps/tra-app.war
 ```
 
-> #### 持久存储配备
+1. 生成镜像并保存至私有仓库
 
-> 容器可以使用多种持久存储，比如本地硬盘，NAS共享文件存储，Ceph块存储，Ceph文件存储。 此处以Ceph存储举例。
+执行如下命令，生成tra-app应用镜像
 
-> 1. 在持久存储上创建需要的存储位置 创建ceph 块存储image
+```
+docker build -t registry.aegonthtf.com/aegonthtf-research/tra-app:23 .
+```
 
-登陆可以操作ceph的机器，创建ceph image (这是简要的使用，实际更完善的使用访问以后再逐步完善) `rbd create rbd/demo-storage --size 5G --image-format 2 --image-feature layering` 查看 `rbd ls` `rbd info demo-storage` 删除 `rbd rm demo-storage`
+推送至私有仓库
 
-1. 在k8s中创建PV & PVC
+```
+docker push registry.aegonthtf.com/aegonthtf-research/tra-app:23
+```
+
+<br><br>
+
+> ## 持久存储准备
+
+容器可以使用多种持久存储，比如本地硬盘，NAS共享文件存储，Ceph块存储，Ceph文件存储,NFS共享文件存储。 此文以我们可能会使用的NAS和Ceph举例。
+
+容器如不使用持久存储，则当容器重启的时候，运行时数据将全部丢失，重启后得到一个全新的实例。
+
+# 1\. 在持久存储上创建需要的存储位置
+
+## Ceph 存储
+
+- 创建ceph 块存储image 登陆可以操作ceph的机器，创建ceph image (这是简要的使用，实际更完善的使用访问以后再逐步完善)
+
+  ```
+  rbd create rbd/demo-storage --size 5G --image-format 2 --image-feature layering
+  ```
+
+- 查看
+
+  ```
+  rbd ls
+  rbd info demo-storage
+  ```
+
+  - 删除 (勿执行)
+
+  ```
+  rbd rm demo-storage
+  ```
+
+演示： ![ceph image create](/images/ceph-image-create.gif)
+
+- 在k8s中创建PV & PVC
 
 ```yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: demo-pv
+  name: demo-ceph-pv
+  labels:
+    type: ceph-demo
 spec:
   capacity:
     storage: 5Gi
@@ -82,7 +134,9 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: demo-pv-claim
+  name: demo-ceph-pvc
+  labels:
+    type: ceph-demo
 spec:
   accessModes:
     - ReadWriteOnce
@@ -91,49 +145,93 @@ spec:
       storage: 5Gi
 ```
 
-> #### 在k8s上部署服务
+演示： ![ceph image create](/images/ceph-storage.gif)
 
-> 1. 通过k8s Dashboard界面部署
-> 2. 通过yaml文件部署服务
+## NAS 存储
 
-NAS存储
+- 在k8s各Node上映射NAS应用共享文件夹路径
+
+![nas1](/images/nas.png)
+
+- 创建PV&PVC
+
+```yaml
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: demo-nas-pv
+  labels:
+    type: local-demo
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/appdata/"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: demo-nas-pvc
+  labels:
+    type: local-demo
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+```
+
+演示： ![nas storage create](/images/nas-storage.gif)
+
+> ## 在k8s上部署服务
+
+- **通过k8s Dashboard界面部署** 通过k8s dashboard图形界面可以部署非常简单的应用。做学习研究时，仅部署简单应用时可尝试使用。 复杂的应用，比如要有持久存储的，要配置探测器等，需要使用下面的脚本方法。 相信未来图形界面也会有进步会支持复杂特性的直观操作。
+
+- **通过yaml文件部署服务**
+
+使用不同持久存储，在脚本上仅仅是claimName的值不同而已。 可以参加下面两个脚本。
+
+使用Ceph存储的应用部署
 
 ```yaml
 kind: Service
 apiVersion: v1
 metadata:
-  name: $2-svc
+  name: demo-svc
 spec:
   ports:
     - name: http
       port: 8080
       targetPort: 8080
   selector:
-      app: $2
+      app: demo
   type: ClusterIP
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name:  $2-deployment
+  name:  demo-deployment
   namespace: default
   labels:
-    app:  $2
+    app:  demo
 spec:
-  replicas: $3
+  replicas: 2
   template:
     metadata:
       labels:
-        app: $2
+        app: demo
     spec:
       terminationGracePeriodSeconds: 35
       containers:
-      - name: $2
-        image: registry.aegonthtf.com/$1/$2:$9
+      - name: task
+        image: registry.aegonthtf.com/aegonthtf-research/tra-app:23
         imagePullPolicy: Always
         readinessProbe:
           httpGet:
-            path: $8
+            path: /health
             port: 8080
             scheme: HTTP
           initialDelaySeconds: 60
@@ -142,7 +240,7 @@ spec:
           failureThreshold: 5
         livenessProbe:
           httpGet:
-            path: $8
+            path: /health
             port: 8080
             scheme: HTTP
           initialDelaySeconds: 60
@@ -153,47 +251,125 @@ spec:
           - name: http
             containerPort: 8080
         volumeMounts:
-                  -
-                    name: "nas-directory"
-                    mountPath: "/appdata"
-        volumes:
               -
-                name: "nas-directory"
-                hostPath:
-                  path: "/appdata/"
+                name: "persistent-storage"
+                mountPath: "/appdata"
+      volumes:
+          -
+            name: "persistent-storage"
+            persistentVolumeClaim:
+            claimName: demo-ceph-pvc
 ```
 
-ceph存储
+演示：![app create](/images/demo-ceph-app.gif)
 
-```
+![result](/images/result.png)
+
+_注意：使用ceph块存储不能创建多于1个副本，否则第二个及以上的副本会遇到存储被锁住的提示_
+
+使用NAS存储的应用部署.
+
+```yaml
+kind: Service
+apiVersion: v1
+metadata:
+  name: demo-svc
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+      app: demo
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name:  demo-deployment
+  namespace: default
+  labels:
+    app:  demo
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      terminationGracePeriodSeconds: 35
+      containers:
+      - name: task
+        image: registry.aegonthtf.com/aegonthtf-research/tra-app:23
+        imagePullPolicy: Always
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          timeoutSeconds: 6
+          successThreshold: 1
+          failureThreshold: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 60
+          timeoutSeconds: 6
+          successThreshold: 1
+          failureThreshold: 5
+        ports:
+          - name: http
+            containerPort: 8080
+        volumeMounts:
+              -
+                name: "persistent-storage"
+                mountPath: "/appdata"
+      volumes:
+          -
+            name: "persistent-storage"
+            persistentVolumeClaim:
+            claimName: demo-nas-pvc
 ```
 
 创建Ingress (什么是Ingress?)
+
+在我们Ocean容器平台架构中，域名及负载均衡反向代理服务器组如果是小区大门的话，那么Ingress就是楼道门。 是k8s集群对外暴露服务的机制，其本质为一个根据定义自动配置和调整的nginx。 有多种实现，但我们目前使用的就是nginx的实现，所以可以这么简单的理解。
+
+容器平台对外暴露服务的路径 client -> nginx -> kubernetes node & ingress -> kubernetes app service -> kubernetes app pod
+
+如下为创建Demo应用的ingress的yaml脚本，执行后，即可创建相应的ingress配置。
 
 ```yaml
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: $7
+  name: demo.aegonthtf.com
 spec:
   rules:
-  - host: $7
+  - host: demo.aegonthtf.com
     http:
       paths:
-      - path: $8
+      - path: /
         backend:
-          serviceName: $2-svc
+          serviceName: demo-svc
           servicePort: 8080
-`
 ```
 
 > #### 服务验证
 
 1. 配置服务域名DNS
 
-容器平台对外暴露服务的架构简介
+在实际工作中应在DNS中增加相关域名配置，但研究阶段也可以在hosts中增加解析。 如上Demo,我在hosts中新增了如下解析。
 
-client -> nginx -> kubernetes node & ingress ->  kubernetes app service ->  kubernetes app pod
+```
+10.72.240.76   demo.aegonthtf.com
+```
 
+其中10.72.240.76为我们内部的通用域名、负载均衡、反向代理服务器， 其配置了泛域名转发。 故将符合规定的域名转向它，它可自动将访问转向k8s集群。
 
-2. 访问该域名
+1. 访问该域名
+
+![access result ](/images/accessResult.png)
