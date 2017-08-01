@@ -24,13 +24,14 @@
   - 通过k8s Dashboard界面部署服务
   - 通过yaml文件部署服务
 
+
 - 服务验证
 
-  > # 主要步骤
+> # 主要步骤
 
 > ## 构建应用容器镜像
 
-1. 了解基础镜像 Docker的镜像是分层的，一层一层叠加的。比如，最底层就是scratch, 意思就是什么也没有，然后上面可以是CentOS, 然后上面是Tomcat,然后再上面是将实际的业务应用以及对Tomcat的定制化内容加入，最终形成一个实际可以使用的应用系统的Docker镜像。<br>
+1. 了解基础镜像 Docker的镜像是分层的，一层一层叠加的。比如，最底层就是scratch, 意思就是什么也没有，然后上面可以是CentOS, 然后上面是Tomcat,然后再上面是将实际的业务应用以及对Tomcat的定制化内容加入，最终形成一个实际可以使用的应用系统的Docker镜像。
 
 2. 编写Dockerfile文件
 
@@ -86,24 +87,28 @@ docker push registry.aegonthtf.com/aegonthtf-research/tra-app:23
 
 - 创建ceph 块存储image 登陆可以操作ceph的机器，创建ceph image (这是简要的使用，实际更完善的使用访问以后再逐步完善)
 
-  ```bash
+  ```
   rbd create rbd/demo-storage --size 5G --image-format 2 --image-feature layering
   ```
 
 - 查看
 
-  ```bash
+  ```
   rbd ls
   rbd info demo-storage
+
   ```
+
 下面几个命令参考，不要执行
   - 删除镜像
 
-  ```bash
+  ```
   rbd rm demo-storage
   ```
+
   - 查看锁
-  ```bash
+
+  ```
 [root@vm-shalce97 ~]# rbd lock list demo-storage
 There is 1 exclusive lock on this image.
 Locker         ID                                           Address
@@ -111,12 +116,13 @@ client.2265893 kubelet_lock_magic_vm-shalku93.aegonthtf.com 10.72.243.139:0/1022
 
   ```
   - 删除锁
-  ```bash
+
+  ```
 [root@vm-shalce97 ~]# rbd lock rm demo-storage kubelet_lock_magic_vm-shalku93.aegonthtf.com client.2265893
   ```
 
   - 扩展image大小
-  ```bash
+  ```
   [root@vm-shalce97 ~]# rbd resize -p rbd --size 10G demo-storage
 Resizing image: 100% complete...done.
 [root@vm-shalce97 ~]# rbd info demo-storage
@@ -135,7 +141,7 @@ rbd image 'demo-storage':
 
 - 在k8s中创建PV & PVC
 
-```yaml
+```
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -183,7 +189,7 @@ spec:
 
 - 创建PV&PVC
 
-```yaml
+```
 kind: PersistentVolume
 apiVersion: v1
 metadata:
@@ -224,7 +230,7 @@ spec:
 
 使用Ceph存储的应用部署
 
-```yaml
+```
 kind: Service
 apiVersion: v1
 metadata:
@@ -297,7 +303,7 @@ _注意：使用ceph块存储不能创建多于1个副本，否则第二个及�
 
 使用NAS存储的应用部署.
 
-```yaml
+```
 kind: Service
 apiVersion: v1
 metadata:
@@ -370,7 +376,7 @@ spec:
 
 如下为创建Demo应用的ingress的yaml脚本，执行后，即可创建相应的ingress配置。
 
-```yaml
+```
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
