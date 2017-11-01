@@ -1,4 +1,4 @@
-### Jenkins安装
+# Jenkins安装
 
 Jenkins 将以容器安装的方式部署在Kubernetes平台上，以最简化安装过程以及后续维护。后台存储选用Ceph分布式存储，以利用其多副本等高可靠以及灵活扩展的特性。
 
@@ -12,7 +12,7 @@ Jenkins镜像我们采用定制化镜像，该镜像包含了我们选用的Orac
   rbd create rbd/jenkins-home --size 20G --image-format 2 --image-feature layering
   ```
 
-  **_注：_** 使用Ceph作为持久化存储，当分配的存储不足时，可使用Ceph命令对其进行扩容，可参考 [ceph rdb image resize](http://www.mamicode.com/info-detail-1480817.html)
+  > 注使用Ceph作为持久化存储，当分配的存储不足时，可使用Ceph命令对其进行扩容，可参考 [ceph rdb image resize](http://www.mamicode.com/info-detail-1480817.html)
 
 2. Kubernetes PV & PVC 创建
 
@@ -195,7 +195,7 @@ spec:
 
 ![Install the recommend plugin](https://mmbiz.qlogo.cn/mmbiz_png/5Ofd65QfQBBCT79ibpa1YtCcjtv6aAnrBDz37bvJE3q6x85JZicCtGa3N7LgdLibqN8DJlOvWiaWWYlmvtwVhrPWJw/0?wx_fmt=png)
 
-### Jenkins配置
+# Jenkins配置
 
 - Unlock
 
@@ -204,8 +204,9 @@ spec:
 - Install Plugins
 
 - Create Admin Accounts
+
 - General Setting
 
-### Jenkins Pipeline
+# Jenkins Pipeline
 
-### Use Case
+# Use Case
