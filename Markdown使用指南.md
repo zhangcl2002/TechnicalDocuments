@@ -1,7 +1,6 @@
-
 <br>
 
-> ## Markdown 是什么及可以用于哪些用途
+# Markdown 是什么及可以用于哪些用途
 
 Markdown是一种标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。
 
@@ -9,11 +8,11 @@ Markdown的语法简洁明了、比HTML更容易学习，而且功能比纯文�
 
 从内部来说，比较适合我们编写技术说明，特别是可以借由Markdown文档以及部分成熟的渲染方案生成格式较好的可用于微信发布的文章（尤其是解决代码段格式的问题）。
 
-这个文章没有配图，全是文字，期望可以经由此为大家编写技术总结文章提供一个工具。因只是一个工具所以大概会用就可以了，能用上我适用场景需要用的部分特性，能用它写个简单的技术总结文档，格式可以看的过去就可以了。很炫，很专业也不是本文的目标，不过自己有兴趣可参考文后的参考网站进行深入了解，或自行进行深入学习。
+这个文章没有配图，全是文字，期望可以经由此为大家编写技术总结文章提供一个工具。因只是一个工具所以大概会用就可以了，能用上我们适用场景需要用的部分特性，能用它写个简单的技术总结文档，格式可以看的过去就可以了。很炫，很专业也不是本文的目标，不过自己有兴趣可参考文后的参考网站进行深入了解，或自行进行深入学习。
 
 <br>
 
-> ## 我们选用什么工具来使用Markdown
+# 我们选用什么工具来使用Markdown
 
 Markdown编辑工具有很多。 有收费的，有免费的. 简单写写总结倒是用不到多么强大的功能，用开源免费软件就足够了。
 
@@ -33,20 +32,20 @@ Markdown编辑工具有很多。 有收费的，有免费的. 简单写写总结
 
 - 网易云笔记
 
-- 在线Markdown编辑 <http://dillinger.io/>
+- 在线Markdown编辑 <http://dillinger.io/> <http://blog.didispace.com/tools/online-markdown/>
 
 其中后四种主要仅用于编辑和简单的转换显示，非常简单，本文略过不讲。 文中主要介绍一下第一、第二种工具的相关情况，以及使用这两种工具完成公众号文章的生成。
 
 <br>
 
-> ## 如何安装工具
+# 如何安装工具
 
 <br>
 
-## 1\. 安装Atom
+# 1\. 安装Atom
 
 - **获取软件** 登陆Atom官网<https://atom.io> ，获得最新的Atom软件。
-- **安装软件** 按照<http://flight-manual.atom.io/getting-started/sections/installing-atom/中的安装说明，安装即可>
+- **安装软件** 按照<http://flight-manual.atom.io/getting-started/sections/installing-atom/>中的安装说明，安装即可
 - **配置代理**（根据网络环境决定是否操作这一步骤） 公司内有proxy的环境，需要在软件中配置代理，才能后续在Atom中下载安装相关的插件（Atom软件必须配置有不同的插件，才能拥有强大丰富的功能）
 
 ```cmd
@@ -65,7 +64,7 @@ c:\usr\username > apm config set https-proxy https://username:password@proxy-ip:
   - _GitHub_， _Git Plus_ 版本控制插件。 可实现将编辑的文件在Github网站的上传下载。 （该插件本身必须配合以本地安装有Git客户端才可以正常实现预期功能。）插件的功能完全就是在Atom中有界面来实现git client的commit , push等功能。不用插件完全在文件系统中使用传统的git client也是一样的，能将文档保存进git hub并能上传下载就可以了。 这两个插件能否适用于gitlab，没测试，应该也是可以的。
   - _Atom Beutify_ 格式插件。 可以帮助你一键调整格式
 
-## 2\. 安装Markdown Here
+# 2\. 安装Markdown Here
 
 该插件软件因保存在Google的资产中，所以国内访问不到官方软件下载的位置。
 
@@ -81,13 +80,13 @@ c:\usr\username > apm config set https-proxy https://username:password@proxy-ip:
 
 <br>
 
-> ## 如何使用工具
+# 如何使用工具
 
 <br>
 首先，建议找两篇关于Markdown语法的文章看看，了解下最简单的那几个元素就可以了。 如几级标题的定义，引用的定义，字体强调，斜体字，有序列表，无序列表，链接插入，图片插入等主要的使用场景。<br>
 对这些基础的语法要素要做一点点了解，否则，就算能使用工具达成目标，但在黑夜里走路实在也是没什么意思。
 
-> #### 编写Markdown文档
+## 编写Markdown文档
 
 **1\. 简单编辑**
 
@@ -100,6 +99,7 @@ c:\usr\username > apm config set https-proxy https://username:password@proxy-ip:
 整个编辑器的风格以及代码高亮显示（其实这个工具还是一个代码编辑器，很多前端工程师会用的），我们仅仅希望他能高亮显示我们的一些代码块中的语法就不错了。 如Yaml文件， Linux Shell文件，命令行这些）是在Settings菜单中的Themes这里面设置的，其中又分为Style Theme和Syntax Theme, 分别是定义整个编辑器风格的以及代码语法高亮的）
 
 可以尝试选择不同的风格。
+
 
 **3\. 图片处理**
 
@@ -119,9 +119,21 @@ Markdown文件中可以插入的图片包含jepg,png等静态的图片，也可�
 - Mac截屏工具 Snip <http://snip.qq.com> **_注意：_** 使用滚动拷屏时，需要在系统的privacy设置中的，辅助功能部分加上snip, 然后在snip的偏好设置中，选中允许滚空拷屏。
 - Windows截图工具 <https://zh.snipaste.com/download.html>
 
+**4\. 文件preview设置
+
+如果想要预览或者生成自己想要的文件，比如html, pdf等类型的文件，推荐使用markdown-preview-enhanced插件进行预览和导出。预览和导出之前，先去它的设置菜单去设置一下预览或导出的渲染格式。
+导出的html有可能可以直接输入微信后台进行发布（这一点未测试）
+
+![markdown-preview-enhanced setting1](images/markdown-preview-enhanced设置.png)
+![markdown-preview-enhanced setting2](images/markdown-preview-enhancedSetting2.png)
+
+
+
 <br>
 
-> #### 发送微信号文章
+## 发送微信号文章
+
+可以试一下将atom preview enhanced插件生成的html直接拷贝到微信公众号后台，进行发布。（未测试）  另外就是如下使用Markdown Here来进行发布
 
 **1\. 图片准备**
 
@@ -144,7 +156,8 @@ Markdown文件中可以插入的图片包含jepg,png等静态的图片，也可�
 **5\. 图文预览后发出** 预览可以使用它提供的模拟器预览。 也可以发送到自己的手机预览。
 
 <br>
-**_reference:_**
+
+_reference:_
 
 - [Atom Official Web Site][08e41aff]
 
