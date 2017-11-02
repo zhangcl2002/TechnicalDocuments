@@ -42,11 +42,11 @@ Gitlab的容器镜像是使用Omnibus生成的，包含了构建Gitlab平台的�
 
 2. 在k8s中为gitlab创建pv & pvc
 
-```
+````yaml
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: gitlab-data-pv   
+  name: gitlab-data-pv
 spec:
   capacity:
     storage: 20Gi
@@ -111,7 +111,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: gitlab-log-pv     
+  name: gitlab-log-pv
 spec:
   capacity:
     storage: 2Gi
@@ -132,14 +132,14 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: gitlab-log-claim     
+  name: gitlab-log-claim
 spec:
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 2Gi
----  
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -171,7 +171,7 @@ spec:
   resources:
     requests:
       storage: 10Gi
----      
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -203,7 +203,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 10Gi      
+      storage: 10Gi
 ```
 
 3. 在k8s中为gitlab创建专用Redis服务（未构建集群）
@@ -260,13 +260,13 @@ spec:
       volumes:
       - name: data
         persistentVolumeClaim:
-          claimName: gitlab-redis-claim          
-```
+          claimName: gitlab-redis-claim
+````
 4. 在k8s中为gitlab创建postgresql数据库服务
 
 **重要提示**  因postgresql在初始化时，要求其使用的存储路径全空，而Ceph如上创建提供的存储中包含lost+found文件夹，不作处理则容器启动会失败。所以，在创建和启动postgresql DB Container之前，首先先登陆Ceph服务器，通过如下命令，将lost+found文件夹删除。
 
-```
+```bash
 rbm map  gitlab-postgre-storage
 mount  dev/..   /mnt
 rm -rf lost+found
@@ -276,7 +276,7 @@ umount /mnt
 
 通过如下脚本创建和启动PostgreSQL DB.
 
-```
+```yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -319,7 +319,7 @@ spec:
         - name: postgres
           containerPort: 5432
         volumeMounts:
-        - mountPath: /var/lib/postgresql/data         
+        - mountPath: /var/lib/postgresql/data
           name: data
         livenessProbe:
           exec:
@@ -354,7 +354,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: gitlab  
+  name: gitlab
   labels:
     name: gitlab
 spec:
@@ -368,11 +368,11 @@ spec:
     - name: ssh
       port: 1022
       targetPort: ssh
----      
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: gitlab  
+  name: gitlab
 spec:
   replicas: 1
   template:
@@ -407,7 +407,7 @@ spec:
         - name: http
           containerPort: 80
         - name: ssh
-          containerPort: 22        
+          containerPort: 22
         volumeMounts:
         - name: gitlab-data-storage
           mountPath: /var/opt/gitlab
@@ -436,7 +436,7 @@ spec:
           claimName: gitlab-config-claim
       - name: gitlab-log-storage
         persistentVolumeClaim:
-          claimName: gitlab-log-claim        
+          claimName: gitlab-log-claim
 
 ```
 5. 在k8s中通过ingress暴露服务，ingress中的host设置为gitlab.example.org
@@ -464,7 +464,7 @@ spec:
 ```
 server {
     listen       80;
-    server_name  gitlab.aegonthtf.com logcenter-dev.aegonthtf.com jenkins-edge.aegonthtf.com zipkin-dev.aegonthtf.com earthcore.aegonthtf.com sonarqube-dev.aegonthtf.com eureka-dev.aegonthtf.com ;  
+    server_name  gitlab.aegonthtf.com logcenter-dev.aegonthtf.com jenkins-edge.aegonthtf.com zipkin-dev.aegonthtf.com earthcore.aegonthtf.com sonarqube-dev.aegonthtf.com eureka-dev.aegonthtf.com ;
 
     #charset koi8-r;
     access_log  /var/log/nginx/gitlab.log  main;
