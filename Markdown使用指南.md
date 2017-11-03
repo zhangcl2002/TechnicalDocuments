@@ -49,7 +49,7 @@ Markdown编辑工具有很多。 有收费的，有免费的. 简单写写总结
 - **配置代理**（根据网络环境决定是否操作这一步骤） 公司内有proxy的环境，需要在软件中配置代理，才能后续在Atom中下载安装相关的插件（Atom软件必须配置有不同的插件，才能拥有强大丰富的功能）
 
 ```cmd
-c:\usr\username > apm config set https-proxy https://username:password@proxy-ip:proxy-port
+c:\usr\username > apm config set https-proxy http://username:password@proxy-ip:proxy-port
 ```
 
 - **安装插件**
