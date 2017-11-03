@@ -20,7 +20,8 @@
 -   基于spring boot实例进行讨论，对比上述目标实现的情况
 -   基于Spring Cloud的Demo实例讨论，了解和探讨Spring Cloud微服务架构在容器平台上的情况
 
-4.  推介大家试用，共同雕琢完善我们的新一代系统平台-Ocean容器云平台。
+4.  动静分离，前后端分离的后台配置
+5.  推介大家试用，共同雕琢完善我们的新一代系统平台-Ocean容器云平台。
 
 ## Ocean容器云平台架构概要介绍
 
@@ -62,6 +63,7 @@
 -   构建和部署
 
     -   构建、质量检查、部署发布（模拟测试环境）
+        手工 、SCM提交触发 方式
 ![deploy](images/deploy.png)
     -   构建、质量检查、部署发布（模拟生产环境）
 
@@ -70,7 +72,7 @@
        查看和讨论
 ![sonarqube1       ](images/sonarqube1.png)
 ![sonarqube2](images/sonarqube2.png)
-![sonarqube3](images/sonarqube3.png) 
+![sonarqube3](images/sonarqube3.png)
 
 -   访问验证
 
@@ -94,7 +96,7 @@
 
     尚存在的问题： 多个实例的话，需要全部都要更新，配置项才全部生效。集群入口调一次只能改一个实例。
 
-    其实配置中心这块有更好的实现，也有一些国内的开源产品在做，比如携程和百度都有，但因为更复杂没有做。都可以做到更改配置项后不用人工干涉，系统会自动对所有实例生效新的配置。
+    其实配置中心这块有更好的实现，国内有公司在做开源产品，比如携程和百度都有，但因为更复杂没有做。据说都可以做到更改配置项后不用人工干涉，系统会自动对所有实例生效新的配置。
 
 -   简单讨论Spring Actuator模块的作用。（基本不用动手就可以增加的应用运维心脏，健康监控探针）
 
@@ -146,7 +148,8 @@
 
 演示Case：
 
-基于Spring Cloud框架开发三个服务，1. Send Message 2. Mail Notifier 3. Page Notifier 三个服务均注册在服务注册中心，每个服务至少有两个以上的实例，每个实例的配置信息均保存在配置中心。三个服务均以Zuul API的方式暴露服务。 三个服务没有任何功能，仅仅是记录日志。 Send Message分别调用Mail Notifier和Page Notifier模拟通过两种方式发出通知的功能。 其中Page Notifier每次被调用会消耗4s的时间，Mail Notifier会立即返回。
+基于Spring Cloud框架开发三个服务，1. Send Message 2. Mail Notifier 3. Page Notifier 三个服务均注册在服务注册中心，每个服务至少有两个以上的实例，每个实例的配置信息均保存在配置中心。三个服务均以Zuul API的方式暴露服务。 三个服务没有任何功能
+，仅仅是记录日志。 Send Message分别调用Mail Notifier和Page Notifier模拟通过两种方式发出通知的功能。 其中Page Notifier每次被调用会消耗4s的时间，Mail Notifier会立即返回。
 
 1.  介绍、演示、讨论Spring Cloud中的配置中心。
 
@@ -160,3 +163,80 @@ url: http://turbine.aegonthtf.com/hystrix/
 
 4.  介绍、演示、讨论利用Postman测试API ![service-access](images/service-access.gif)
 5.  介绍、演示、讨论Apache Jemeter针对API进行压力测试。 ![stress](images/stress.gif)
+    查看输出的日志：
+    http://logcenter-dev.aegonthtf.com
+    QueryString:   application:"send"   application:"page"  application:"mail"
+
+## 简单介绍动静分离在Nginx后台配置的实现方法，探讨应用开发中的前后端分离
+
+````
+user  nginx;
+worker_processes  1;
+
+error_log  /var/log/nginx/error.log warn;
+pid        /var/run/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+   server {
+       listen       80;
+       server_name  localhost;
+
+        location / {
+            root   /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+
+        # 所有静态请求都由nginx处理，存放目录为html
+        location ~ \.(gif|jpg|jpeg|png|bmp|swf)$ {
+            root   /usr/share/nginx/html;
+        }
+
+        # 所有动态请求都转发给tomcat处理
+        location ~ \.(jsp|do)$ {
+            proxy_pass  @backend_addr@;
+        }
+
+       # 也可以采用如下方式，将某一个上下文的访问请求全部转发到api网关或者
+       # 后台服务的Service地址
+       #location /api-gateway {
+       #    proxy_pass http://api-gateway-svc:8080;
+       #    proxy_redirect default;
+       #    proxy_set_header Host $host;
+       #    proxy_set_header X-Real-IP $remote_addr;
+       #    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+       #   proxy_buffering off;
+       #}
+
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+
+
+    include /etc/nginx/conf.d/*.conf;
+}
+````
