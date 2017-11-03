@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+  <html>
+    <head>
+      <title>代码质量检查和分析平台工具和流程</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///C:\Users\michaelzhang\.atom\packages\markdown-preview-enhanced\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      
+
+      <style> 
+      /**
+ * Darcula theme
+ *
+ * Adapted from a theme based on:
+ * IntelliJ Darcula Theme (https://github.com/bulenkov/Darcula)
+ *
+ * @author Alexandre Paradis <service.paradis@gmail.com>
+ * @version 1.0
+ */
+
+code[class*="language-"],
+pre[class*="language-"] {
+	color: #a9b7c6;
+	font-family: Consolas, Monaco, 'Andale Mono', monospace;
+	direction: ltr;
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	line-height: 1.5;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+pre[class*="language-"]::-moz-selection, pre[class*="language-"] ::-moz-selection,
+code[class*="language-"]::-moz-selection, code[class*="language-"] ::-moz-selection {
+    color: inherit;
+    background: rgba(33,66,131,.85);
+}
+
+pre[class*="language-"]::selection, pre[class*="language-"] ::selection,
+code[class*="language-"]::selection, code[class*="language-"] ::selection {
+    color: inherit;
+    background: rgba(33,66,131,.85);
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+	padding: 1em;
+	margin: .5em 0;
+	overflow: auto;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+	background: #2b2b2b;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+	padding: .1em;
+	border-radius: .3em;
+}
+
+.token.comment,
+.token.prolog,
+.token.cdata {
+	color: #808080;
+}
+
+.token.delimiter,
+.token.boolean,
+.token.keyword,
+.token.selector,
+.token.important,
+.token.atrule {
+	color: #cc7832;
+}
+
+.token.operator,
+.token.punctuation,
+.token.attr-name {
+    color: #a9b7c6;
+}
+
+.token.tag,
+.token.tag .punctuation,
+.token.doctype,
+.token.builtin {
+    color: #e8bf6a;
+}
+
+.token.entity,
+.token.number,
+.token.symbol {
+    color: #6897bb;
+}
+
+.token.property,
+.token.constant,
+.token.variable {
+    color: #9876aa;
+}
+
+.token.string,
+.token.char {
+	color: #6a8759;
+}
+
+.token.attr-value,
+.token.attr-value .punctuation {
+    color: #a5c261;
+}
+.token.attr-value .punctuation:first-child {
+    color: #a9b7c6;
+}
+
+.token.url {
+	color: #287bde;
+	text-decoration: underline;
+}
+
+.token.function {
+	color: #ffc66d;
+}
+
+.token.regex {
+    background: #364135;
+}
+
+.token.bold {
+	font-weight: bold;
+}
+
+.token.italic {
+	font-style: italic;
+}
+
+.token.inserted {
+    background: #294436;
+}
+
+.token.deleted {
+    background: #484a4a;
+}
+
+/*code.language-css .token.punctuation {
+	color: #cc7832;
+}*/
+
+code.language-css .token.property,
+code.language-css .token.property + .token.punctuation {
+	color: #a9b7c6;
+}
+
+code.language-css .token.id {
+	color: #ffc66d;
+}
+
+code.language-css .token.selector > .token.class,
+code.language-css .token.selector > .token.attribute,
+code.language-css .token.selector > .token.pseudo-class,
+code.language-css .token.selector > .token.pseudo-element {
+	color: #ffc66d;
+}body{font-size:16px;background-color:#f3f2ee;font-family:"PT Serif",'Times New Roman',Times;color:#1f0909;line-height:1.5em}body ol,body ul{list-style:none}body blockquote,body q{quotes:none}body blockquote:before,body blockquote:after,body q:before,body q:after{content:'';content:none}body table{border-collapse:collapse;border-spacing:0}body h1,body h2,body h3,body h4,body h5,body h6{font-weight:bold}body h1{font-size:1.875em;line-height:1.6em;margin-top:2em}body h2,body h3{font-size:1.3125em;line-height:1.15;margin-top:2.285714em;margin-bottom:1.15em}body h3{font-weight:normal}body h4{font-size:1.125em;margin-top:2.67em}body h5,body h6{font-size:1em}body h1{border-bottom:1px solid;margin-bottom:1.875em;padding-bottom:.8125em}body a{text-decoration:none;color:#065588}body a:hover,body a:active{text-decoration:underline}body p,body blockquote,body .md-fences{margin-bottom:1.5em}body h1,body h2,body h3,body h4,body h5,body h6{margin-bottom:1.5em}body blockquote{font-style:italic;border-left:5px solid;margin-left:2em;padding-left:1em}body ul,body ol{margin:0 0 1.5em 1.5em}body ol li{list-style-type:decimal;list-style-position:outside}body ul li{list-style-type:disc;list-style-position:outside}body li>p{margin-top:0;margin-bottom:0}body .md-meta,body .md-before,body .md-after{color:#999}body table{margin-bottom:1.5em;font-size:1em}body thead th,body tfoot th{padding:.25em .25em .25em .4em;text-transform:uppercase}body th{text-align:left}body td{vertical-align:top;padding:.25em .25em .25em .4em}body code,body .md-fences{background-color:#dadada;padding-left:1ch;padding-right:1ch}body .md-fences{margin-left:2em;margin-bottom:3em}body .md-fences .CodeMirror.CodeMirror-wrap{top:-0.8em}body pre,body code,body tt{font-size:.875em;line-height:1.714285em}body h1{line-height:1.3em;font-weight:normal;margin-bottom:.5em}body p+ul,body p+ol{margin-top:-1em}body h3+ul,body h4+ul,body h5+ul,body h6+ul,body h3+ol,body h4+ol,body h5+ol,body h6+ol{margin-top:.5em}body li>ul,body li>ol{margin-top:inherit}body h2,body h3{margin-bottom:.75em}body hr{border-top:none;border-right:none;border-bottom:1px solid;border-left:none}body h1{border-color:#c5c5c5}body blockquote{border-color:#bababa;color:#656565}body thead.md-table-edit{background-color:transparent}body thead{background-color:#dadada}body tr:nth-child(even){background:#e8e7e7}body hr{border-color:#c5c5c5}body .task-list{padding-left:1rem}body .task-list-item{list-style-type:none;margin-left:-1.8em}body .task-list-item .task-list-item-checkbox{margin-right:.8em}body .task-list-item input:before{content:'\221A';display:inline-block;width:1.25rem;height:1.5rem;vertical-align:middle;text-align:center;color:#ddd;background-color:#F3F2EE}body .task-list-item input:checked:before,body .task-list-item input[checked]:before{color:inherit}body img{max-width:100%}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none} 
+       
+      </service.paradis@gmail.com></style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview   ">
+      <h1 class="mume-header" id="&#x4EE3;&#x7801;&#x8D28;&#x91CF;&#x68C0;&#x67E5;&#x548C;&#x5206;&#x6790;&#x6307;&#x5357;">代码质量检查和分析指南</h1>
+
+<p>持续集成部署中包含代码质量检查一个环节，有工具协助进行代码规范和质量检查，应该是可以协助开发人员提高代码质量，增加生产效能，避免一些缺陷和安全风险的，是一件有益的事情。所以借由持续集成部署的逐步推出，也希望将代码质量检查工具推荐给大家使用。 故有这篇笔记。</p>
+<h2 class="mume-header" id="&#x6D89;&#x53CA;&#x5DE5;&#x5177;">涉及工具</h2>
+
+<ol>
+<li>SonarQube代码质量扫描分析平台，eclipse插件<br>
+试用地址：<br>
+SonarQube URL: <a href="http://sonarqube-dev.aegonthtf.com">http://sonarqube-dev.aegonthtf.com</a>  User: admin Password: admin</li>
+<li>阿里Java代码规约插件（有兴趣可尝试）</li>
+</ol>
+<h2 class="mume-header" id="&#x4F7F;&#x7528;&#x573A;&#x666F;">使用场景</h2>
+
+<ol>
+<li>开发过程中检查分析代码质量，确保产出代码的质量</li>
+<li>部署过程中分析检查代码质量，并增加检查标准和阀值，不符合质量要求的代码不允许部署到UAT环境和生产环境</li>
+<li>调阅代码质量检查的数据，编写QA质量检查报告</li>
+</ol>
+<h2 class="mume-header" id="&#x5F00;&#x53D1;&#x8FC7;&#x7A0B;&#x4E2D;&#x5982;&#x4F55;&#x4F7F;&#x7528;">开发过程中如何使用</h2>
+
+<ul>
+<li>
+<h4>在eclipse中使用Maven（调用sonarqube scannner)分析项目代码质量</h4>
+</li>
+</ul>
+<p>SonarQube Scanner，是sonarqube是SonarQube的客户端,是代码扫描的工具，它会将项目的代码进行分析并与sonarqube Server一起完成代码分析，最后将结果发送至SonarQube服务器。</p>
+<p>SonarQube Scanner很方便和不同类型的构建工具进行整合，我们使用Maven。</p>
+<p>Maven仓库中有SonarQube Scanner工具的插件，只需要进行以下设置即可使用，需要在Maven的Setting.conf文件进行如下配置（我的配置，该配置指定了本地Maven仓库，并设置完毕sonarqube相关信息）</p>
+<pre class="language-xml"><span class="token prolog">&lt;?xml version="1.0" encoding="UTF-8"?></span>
+&lt;settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0http://maven.apache.org/xsd/settings-1.1.0.xsd";; xmlns="http://maven.apache.org/SETTINGS/1.1.0";;
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">;;
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>pluginGroups</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>pluginGroup</span><span class="token punctuation">></span></span>org.sonarsource.scanner.maven<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>pluginGroup</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>pluginGroups</span><span class="token punctuation">></span></span>
+
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>profiles</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>profile</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span><span class="token punctuation">></span></span>sonar<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>activation</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>activeByDefault</span><span class="token punctuation">></span></span>true<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>activeByDefault</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>activation</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>properties</span><span class="token punctuation">></span></span>
+            <span class="token comment" spellcheck="true">&lt;!-- Optional URL to server. Default value is http://localhost:9000 --></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>sonar.host.url</span><span class="token punctuation">></span></span>
+                 http://sonarqube-dev.aegonthtf.com
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>sonar.host.url</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>properties</span><span class="token punctuation">></span></span>
+     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>profile</span><span class="token punctuation">></span></span>
+
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>profile</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>repositories</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>repository</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>snapshots</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>enabled</span><span class="token punctuation">></span></span>false<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>enabled</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>snapshots</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span><span class="token punctuation">></span></span>central<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">></span></span>libs-release<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url</span><span class="token punctuation">></span></span>http://artifactory.aegonthtf.com/artifactory/libs-release<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url</span><span class="token punctuation">></span></span>;;
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>repository</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>repository</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>snapshots</span> <span class="token punctuation">/></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span><span class="token punctuation">></span></span>snapshots<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">></span></span>libs-snapshot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url</span><span class="token punctuation">></span></span>http://artifactory.aegonthtf.com/artifactory/libs-snapshot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url</span><span class="token punctuation">></span></span>;;
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>repository</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>repositories</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>pluginRepositories</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>pluginRepository</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>snapshots</span><span class="token punctuation">></span></span>
+            <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>enabled</span><span class="token punctuation">></span></span>false<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>enabled</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>snapshots</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span><span class="token punctuation">></span></span>central<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">></span></span>plugins-release<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url</span><span class="token punctuation">></span></span>http://artifactory.aegonthtf.com/artifactory/plugins-release<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url</span><span class="token punctuation">></span></span>;;
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>pluginRepository</span><span class="token punctuation">></span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>pluginRepository</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>snapshots</span> <span class="token punctuation">/></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span><span class="token punctuation">></span></span>snapshots<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>name</span><span class="token punctuation">></span></span>plugins-snapshot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>name</span><span class="token punctuation">></span></span>
+          <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>url</span><span class="token punctuation">></span></span>http://artifactory.aegonthtf.com/artifactory/plugins-snapshot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>url</span><span class="token punctuation">></span></span>;;
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>pluginRepository</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>pluginRepositories</span><span class="token punctuation">></span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>id</span><span class="token punctuation">></span></span>artifactory<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>id</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>profile</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>profiles</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>activeProfiles</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>activeProfile</span><span class="token punctuation">></span></span>artifactory<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>activeProfile</span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>activeProfiles</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>settings</span><span class="token punctuation">></span></span>
+
+</pre>
+<p>配置完成后，在项目中，执行mvn sonar:sonar，SonarQube Scanner会完成扫描，并扫描结果会上传至Sonarqube服务器中，登陆服务器中就可以查看分析结果和进行后续处理了。</p>
+<p>执行示例：<br>
+Demo项目： unistorage<br>
+开发工具：  Eclipse<br>
+Build工具： Maven</p>
+<p>演示示例：  通过开发工具中调用maven sonar:sonar完成代码分析，并在sonarqube服务端查看分析结果<br>
+<img src="images/sonar-maven.gif" alt="sonar-maven"></p>
+<p>演示示例：  通过持续集成部署流程完成代码分析. 特别点在代码质量检查的地方有两个步骤，一个是扫描分析，一个是评分。 评分低于标准，则流程终止，即无法完成部署。 这也是一个关键点，也许未来我们会用，那样不符合标准的程序就无法发到平台上去了。</p>
+<p><img src="images/sonar-cicd.gif" alt="sonar-maven"></p>
+<ul>
+<li>
+<h4>SonarLint (eclipse plugin)组件的安装和使用</h4>
+</li>
+</ul>
+<p>SonarLint可以在开发工具中实时对代码进行分析，并可以与sonarqube服务器联系。 试用过程发现sonarlint的分析结果并不会上传到sonarqube服务器中，但服务器中的策略等会影响sonarlint在本地的分析表现。<br>
+比如： 代码中存在一个已经被探知的bug,如果在服务器上标志已经修复，在下一次Sonarlint在分析时就会忽略这个bug.</p>
+<p>演示示例：  通过sonarlint完成本地分析.服务端标注一个bug,本地下次扫描是会按服务器策略展示结果。</p>
+<p><img src="images/sonar-sonarlint.gif" alt="sonarlint"></p>
+<p><a href="https://www.sonarlint.org/eclipse/">https://www.sonarlint.org/eclipse/</a><br>
+<a href="http://www.jianshu.com/p/778fd35fd494">http://www.jianshu.com/p/778fd35fd494</a></p>
+<ul>
+<li>
+<h4>使用Sonarqube Scanner CLI进行代码扫描(作者未测试这个部分)</h4>
+</li>
+</ul>
+<p><a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner">https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner</a></p>
+<ul>
+<li>
+<h4>阿里Java开发规约插件</h4>
+</li>
+</ul>
+<p><img src="images/%E5%AE%89%E8%A3%85.png" alt="&#x5B89;&#x88C5;"></p>
+<p>使用演示：</p>
+<p><img src="images/ali-java.gif" alt="sonarlint"></p>
+<ul>
+<li>参考资料：</li>
+</ul>
+<ol>
+<li>
+<p><a href="https://jenkins.io/blog/2017/04/18/continuousdelivery-devops-sonarqube/">https://jenkins.io/blog/2017/04/18/continuousdelivery-devops-sonarqube/</a></p>
+</li>
+<li>
+<p><a href="https://github.com/SonarSource/docker-sonarqube/blob/master/recipes.md?spm=5176.1972344.1.14.kcECvj&amp;file=recipes.md">https://github.com/SonarSource/docker-sonarqube/blob/master/recipes.md?spm=5176.1972344.1.14.kcECvj&amp;file=recipes.md</a></p>
+</li>
+<li>
+<p><a href="http://www.jumpbeandev.com/2017/01/03/sonarqube/">http://www.jumpbeandev.com/2017/01/03/sonarqube/</a></p>
+</li>
+<li>
+<p><a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins">https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+Jenkins</a></p>
+</li>
+<li>
+<p><a href="https://github.com/felipebz/sonar-plsql">https://github.com/felipebz/sonar-plsql</a></p>
+</li>
+</ol>
+
+      </div>
+      <div class="md-sidebar-toc"><ul>
+<li><a href="#%E4%BB%A3%E7%A0%81%E8%B4%A8%E9%87%8F%E6%A3%80%E6%9F%A5%E5%92%8C%E5%88%86%E6%9E%90%E6%8C%87%E5%8D%97">代码质量检查和分析指南</a>
+<ul>
+<li><a href="#%E6%B6%89%E5%8F%8A%E5%B7%A5%E5%85%B7">涉及工具</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF">使用场景</a></li>
+<li><a href="#%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8">开发过程中如何使用</a></li>
+</ul>
+</li>
+</ul>
+</div>
+      <a id="sidebar-toc-btn">≡</a>
+    </body>
+    
+    
+    
+    <script>
+(function bindTaskListEvent() {
+  var taskListItemCheckboxes = document.body.getElementsByClassName('task-list-item-checkbox')
+  for (var i = 0; i < taskListItemCheckboxes.length; i++) {
+    var checkbox = taskListItemCheckboxes[i]
+    var li = checkbox.parentElement
+    if (li.tagName !== 'LI') li = li.parentElement
+    if (li.tagName === 'LI') {
+      li.classList.add('task-list-item')
+    }
+  }
+}())    
+</script>
+    
+<script>
+
+var sidebarTOCBtn = document.getElementById('sidebar-toc-btn')
+sidebarTOCBtn.addEventListener('click', function(event) {
+  event.stopPropagation()
+  if (document.body.hasAttribute('html-show-sidebar-toc')) {
+    document.body.removeAttribute('html-show-sidebar-toc')
+  } else {
+    document.body.setAttribute('html-show-sidebar-toc', true)
+  }
+})
+</script>
+      
+  </html>
